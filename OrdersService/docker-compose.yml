@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  # refers to app service 
+  orders: 
+    build: .
+    command: sh -c "node orders"
+    ports: # replaces -dp 3000:3000
+      - 9000:9000
+
+    working_dir: /app  
+    volumes:
+      - ../OrdersService/:/app
+
+    environment:  # replaces the MYSQL env vars
+      # change mongo uri so it isn't localhost....
+      MONGO_URI: mongodb://mongodb_orders:27017/orders
+
+    links:
+      - mongodb_orders
+
+  mongodb_orders:
+    image: mongo:latest
+
+    ports: # 27019:27017 as 27017:27017 may be used by books service 
+      - 27019:27017
+    volumes:
+      - orders_mongodb_data_container:/data/db
+
+volumes:
+  orders_mongodb_data_container:
+  

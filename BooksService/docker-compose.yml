@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  # refers to books service 
+  books: 
+    build: .
+    command: sh -c "node books"
+    ports: # replaces -dp 3000:3000
+      - 3000:3000
+
+    working_dir: /BooksService  
+    volumes:
+      - ../BooksService/:/BooksService
+
+    environment:  # replaces the MYSQL env vars
+      # change mongo uri so it isn't localhost....
+      BOOKS_MONGO_URI: mongodb://mongodb_books:27017/books
+    links:
+      - mongodb_books
+
+  mongodb_books:
+    image: mongo:latest
+
+    ports: 
+      - 27017:27017
+    volumes:
+      - books_mongodb_data_container:/data/db
+
+# docker compose automatically sets up volumes for you
+# if the volumes don't already exist...
+volumes:
+  books_mongodb_data_container:
+
+

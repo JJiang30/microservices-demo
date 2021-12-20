@@ -1,0 +1,13 @@
+{
+  "name": "microservices-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker-up": "docker-compose -p microservices-demo -f BooksService/docker-compose.yml -f CustomersService/docker-compose.yml -f OrdersService/docker-compose.yml up",
+    "docker-config": "docker-compose -p microservices-demo -f BooksService/docker-compose.yml -f CustomersService/docker-compose.yml -f OrdersService/docker-compose.yml config"
+  },
+  "author": "",
+  "license": "ISC"
+}
